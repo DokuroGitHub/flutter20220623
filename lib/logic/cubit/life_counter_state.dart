@@ -15,4 +15,7 @@ class LifeCounterInitial extends LifeCounterState {
 
 class LifeCounterLoaded extends LifeCounterState {
   const LifeCounterLoaded(super.counterValue);
+
+  @override
+  String toString() => 'LifeCounterState(counterValue: $counterValue)';
 }

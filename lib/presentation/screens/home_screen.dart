@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter20220623/constants/enums.dart';
-import 'package:flutter20220623/logic/cubit/counter_cubit.dart';
-import 'package:flutter20220623/logic/cubit/internet_cubit.dart';
-import 'package:flutter20220623/logic/cubit/life_counter_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../constants/enums.dart';
+import '../../logic/cubit/counter_cubit.dart';
+import '../../logic/cubit/internet_cubit.dart';
+import '../../logic/cubit/life_counter_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.title, this.color})
@@ -80,11 +81,22 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       listener: (context, state) {
         if (state is InternetConnected &&
             state.connectionType == ConnectionType.wifi) {
-          BlocProvider.of<CounterCubit>(context).increment();
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Wi-Fi Connected!'),
+            duration: Duration(seconds: 3),
+          ));
         } else if (state is InternetConnected &&
             state.connectionType == ConnectionType.mobile) {
-          BlocProvider.of<CounterCubit>(context).decrement();
-        } else if (state is InternetDisconnected) {}
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Mobile Connected!'),
+            duration: Duration(seconds: 3),
+          ));
+        } else if (state is InternetDisconnected) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Disconnected!'),
+            duration: Duration(seconds: 3),
+          ));
+        }
       },
       child: Scaffold(
         appBar: AppBar(
@@ -216,6 +228,15 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 },
                 child: const Text('Go the web screen'),
               ),
+              const SizedBox(height: 10),
+              // Go the settings screen
+              MaterialButton(
+                color: widget.color,
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/settings');
+                },
+                child: const Text('Go the settings screen'),
+              ),
             ],
           ),
         ),
@@ -228,7 +249,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 heroTag: 'fab1',
                 backgroundColor: widget.color,
                 onPressed: () {
-                  BlocProvider.of<CounterCubit>(context).increment();
+                  context.read<CounterCubit>().increment();
+                  //BlocProvider.of<CounterCubit>(context).increment();
                 },
                 tooltip: 'Increment',
                 child: const Icon(Icons.add),
@@ -238,7 +260,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 heroTag: 'fab2',
                 backgroundColor: widget.color,
                 onPressed: () {
-                  BlocProvider.of<CounterCubit>(context).decrement();
+                  context.read<CounterCubit>().decrement();
+                  //BlocProvider.of<CounterCubit>(context).decrement();
                 },
                 tooltip: 'Decrement',
                 child: const Icon(Icons.remove),

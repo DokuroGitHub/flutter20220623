@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter20220623/presentation/screens/home_screen.dart';
 import 'package:flutter20220623/presentation/screens/second_screen.dart';
+import 'package:flutter20220623/presentation/screens/settings_screen.dart';
 import 'package:flutter20220623/presentation/screens/third_screen.dart';
 import 'package:flutter20220623/presentation/screens/web_screen.dart';
 
@@ -34,6 +35,10 @@ class AppRouter {
             title: 'WebScreen',
             color: Colors.grey,
           ),
+        );
+      case '/settings':
+        return MaterialPageRoute(
+          builder: (_) => const SettingsScreen(),
         );
       default:
         return MaterialPageRoute(

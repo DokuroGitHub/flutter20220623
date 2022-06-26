@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter20220623/constants/enums.dart';
 import 'package:flutter20220623/logic/cubit/counter_cubit.dart';
+import 'package:flutter20220623/logic/cubit/internet_cubit.dart';
 import 'package:flutter20220623/logic/cubit/life_counter_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -84,6 +86,7 @@ class _SecondScreenState extends State<SecondScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // AppLifecycleState
             const Text(
               'AppLifecycleState:',
               style: TextStyle(
@@ -91,6 +94,7 @@ class _SecondScreenState extends State<SecondScreen>
                 fontWeight: FontWeight.bold,
               ),
             ),
+            // _appLifecycleState
             Text(
               _appLifecycleState,
               style: TextStyle(
@@ -117,7 +121,63 @@ class _SecondScreenState extends State<SecondScreen>
               },
             ),
             const Text('times:'),
-            // CounterCubit, state.counterValue
+            // CounterCubit
+            Builder(builder: (context) {
+              final counterValue = context
+                  .select((CounterCubit cubit) => cubit.state.counterValue);
+              return Text(
+                '$counterValue',
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            }),
+            // CounterCubit
+            Builder(builder: (context) {
+              final counterState = context.watch<CounterCubit>().state;
+              return Text(
+                '${counterState.counterValue}',
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            }),
+            // InternetCubit
+            Builder(builder: (context) {
+              final internetState = context.watch<InternetCubit>().state;
+
+              if (internetState is InternetConnected &&
+                  internetState.connectionType == ConnectionType.wifi) {
+                return Text(
+                  'Wi-Fi',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3
+                      ?.copyWith(color: Colors.green),
+                );
+              } else if (internetState is InternetConnected &&
+                  internetState.connectionType == ConnectionType.mobile) {
+                return Text(
+                  'Mobile',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3
+                      ?.copyWith(color: Colors.red),
+                );
+              } else if (internetState is InternetDisconnected) {
+                return Text(
+                  'Disconnected',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3
+                      ?.copyWith(color: Colors.grey),
+                );
+              }
+              return const CircularProgressIndicator();
+            }),
+            // CounterCubit, CounterState
             BlocBuilder<CounterCubit, CounterState>(
               builder: (context, state) {
                 return Text(
@@ -129,6 +189,7 @@ class _SecondScreenState extends State<SecondScreen>
                 );
               },
             ),
+            // Go the third screen
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('/third');
