@@ -189,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 builder: (builderContext) => MaterialButton(
                   color: widget.color,
                   onPressed: () {
-                    //Navigator.of(context).pushNamed('/second');
+                    // Navigator.of(context).pushNamed('/second');
                     Navigator.of(context).pushNamed('/second');
                   },
                   child: const Text('Go the second screen'),
@@ -201,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 builder: (builderContext) => MaterialButton(
                   color: widget.color,
                   onPressed: () {
-                    //Navigator.of(context).pushNamed('/second');
+                    // Navigator.of(context).pushNamed('/second');
                     Navigator.of(builderContext).pushNamed('/third');
                   },
                   child: const Text('Go the third screen'),
