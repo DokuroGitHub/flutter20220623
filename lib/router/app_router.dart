@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter20220623/presentation/screens/home_screen.dart';
 import 'package:flutter20220623/presentation/screens/second_screen.dart';
 import 'package:flutter20220623/presentation/screens/third_screen.dart';
+import 'package:flutter20220623/presentation/screens/web_screen.dart';
 
 class AppRouter {
   Route onGenrateRoute(RouteSettings routeSettings) {
@@ -25,6 +26,13 @@ class AppRouter {
           builder: (_) => const ThirdScreen(
             title: 'ThirdScreen',
             color: Colors.greenAccent,
+          ),
+        );
+      case '/web':
+        return MaterialPageRoute(
+          builder: (_) => const WebScreen(
+            title: 'WebScreen',
+            color: Colors.grey,
           ),
         );
       default:

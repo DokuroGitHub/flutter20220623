@@ -207,6 +207,15 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   child: const Text('Go the third screen'),
                 ),
               ),
+              const SizedBox(height: 10),
+              // Go the web screen
+              MaterialButton(
+                color: widget.color,
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/web');
+                },
+                child: const Text('Go the web screen'),
+              ),
             ],
           ),
         ),
